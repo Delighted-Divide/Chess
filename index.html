@@ -8,7 +8,24 @@
 </head>
 <body>
     <div class="app-container">
-        <!-- Left Pane: Chess Arena (65%) -->
+        <!-- Left Pane: Evaluation Bar (Vertical) -->
+        <div class="eval-pane">
+            <div class="vertical-eval-container">
+                <div class="eval-header">
+                    <span class="eval-value" id="evaluationText">0.0</span>
+                </div>
+                <div class="vertical-eval-wrapper">
+                    <div class="eval-label-top">White</div>
+                    <div class="vertical-eval-bar-container">
+                        <div class="vertical-eval-bar" id="evaluationBar"></div>
+                        <div class="eval-center-line"></div>
+                    </div>
+                    <div class="eval-label-bottom">Black</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Center Pane: Chess Arena -->
         <div class="arena-pane">
             <div class="chessboard-container">
                 <div id="chessboard" class="chessboard">
@@ -25,7 +42,7 @@
             </div>
         </div>
 
-        <!-- Right Pane: Command Center (35%) -->
+        <!-- Right Pane: Command Center -->
         <div class="command-pane">
             <!-- Game Mode Selection -->
             <div class="game-mode-section">
@@ -38,21 +55,6 @@
                     <label>Play as:</label>
                     <button id="playWhite" class="btn-side active">White</button>
                     <button id="playBlack" class="btn-side">Black</button>
-                </div>
-            </div>
-
-            <!-- Evaluation Bar -->
-            <div class="evaluation-section">
-                <h3>Position Evaluation</h3>
-                <div class="evaluation-container">
-                    <div class="evaluation-labels">
-                        <span class="eval-label black">Black</span>
-                        <span class="eval-label white">White</span>
-                    </div>
-                    <div class="evaluation-bar-wrapper">
-                        <div class="evaluation-bar" id="evaluationBar"></div>
-                        <div class="evaluation-text" id="evaluationText">0.0</div>
-                    </div>
                 </div>
             </div>
 

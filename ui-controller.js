@@ -530,34 +530,50 @@ class UIController {
         const bar = document.getElementById('evaluationBar');
         const text = document.getElementById('evaluationText');
         
-        // Smooth the percentage calculation with a gentler curve
-        const smoothedEval = Math.tanh(evaluation / 10) * 10; // Smoother curve for extreme values
-        const percentage = 50 + Math.max(-45, Math.min(45, smoothedEval * 4.5));
+        // Check if we're in mobile view
+        const isMobile = window.innerWidth <= 1024;
+        
+        // Calculate percentage
+        const smoothedEval = Math.tanh(evaluation / 10) * 10;
+        const percentage = 50 - Math.max(-45, Math.min(45, smoothedEval * 4.5));
         
         // Use requestAnimationFrame for smoother updates
         requestAnimationFrame(() => {
-            bar.style.width = `${percentage}%`;
+            if (isMobile) {
+                // Horizontal bar for mobile
+                bar.style.width = `${percentage}%`;
+                bar.style.height = '100%';
+            } else {
+                // Vertical bar for desktop
+                bar.style.height = `${percentage}%`;
+                bar.style.width = '100%';
+            }
         });
         
         const displayEval = Math.abs(evaluation) > 99 ? 'M' : evaluation.toFixed(1);
         text.textContent = evaluation > 0 ? `+${displayEval}` : displayEval;
         
-        // Add classes with smoother thresholds
+        // Add classes for visual feedback
         if (evaluation > 0.5) {
-            bar.classList.add('white-advantage');
-            bar.classList.remove('black-advantage');
+            bar.classList.add('white-winning');
+            bar.classList.remove('black-winning');
+            text.style.color = '#ffffff';
         } else if (evaluation < -0.5) {
-            bar.classList.add('black-advantage');
-            bar.classList.remove('white-advantage');
+            bar.classList.add('black-winning');
+            bar.classList.remove('white-winning');
+            text.style.color = '#2c3e50';
         } else {
-            bar.classList.remove('white-advantage', 'black-advantage');
+            bar.classList.remove('white-winning', 'black-winning');
+            text.style.color = '#ecf0f1';
         }
         
-        // Add visual feedback for significant advantages
+        // Add pulsing effect for significant advantages
         if (Math.abs(evaluation) > 5) {
-            bar.style.filter = 'brightness(1.1)';
+            bar.style.animation = evaluation > 0 ? 
+                'white-pulse 2s ease-in-out infinite' : 
+                'black-pulse 2s ease-in-out infinite';
         } else {
-            bar.style.filter = '';
+            bar.style.animation = '';
         }
     }
 
